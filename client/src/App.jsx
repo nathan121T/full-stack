@@ -9,12 +9,14 @@ const App = () => {
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState(null);
 
+  const API_URL = 'http://localhost:3030/api/tasks';
+  
   useEffect(() =>{
     // fetch tasks
     const getAllTasks = async () => {
     setLoading(true);
     try {
-      const res = await axios.get('http://localhost:3030/api/tasks');
+      const res = await axios.get(API_URL);
       setTasks(res.data);
       setLoading(false);
     } catch (err) {
@@ -34,7 +36,7 @@ const App = () => {
   // Add Task
   const addTask = async (text) => {
     try {
-      const res = await axios.post('http://localhost:3030/api/tasks/', { text });
+      const res = await axios.post(API_URL, { text });
       setTasks(prevTasks => [res.data, ...prevTasks]);
     } catch (err) {
       console.log('Adding task err:', err.message);
@@ -51,7 +53,7 @@ const App = () => {
   // update tasks
   const updateTask = async (id, task) => {
     try {
-      const response = await axios.put(`http://localhost:3030/api/tasks/${id}`, { text: task });
+      const response = await axios.put(API_URL/id, { text: task });
       setEditTask(null);
       setTasks(tasks.map(task => (task._id === editTask._id ? response.data : task)));
     } catch (err) {
@@ -72,7 +74,7 @@ const App = () => {
     const handleDelete = async (id) => {
       if (confirm('Are you sure you want to delete this task?')) {
         try {
-          await axios.delete(`http://localhost:3030/api/tasks/${id}`);
+          await axios.delete(API_URL/id);
           setTasks(tasks.filter(task => task._id !== id));
         } catch (err) {
           console.log('Deleting task err:', err.message);
