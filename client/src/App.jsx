@@ -20,6 +20,7 @@ const App = () => {
     } catch (err) {
       console.log('Fetching tasks err:', err.message);
       setError(err.message);
+      setLoading(false);
     }
   };
    getAllTasks();
